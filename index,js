@@ -1,0 +1,44 @@
+const request = require("request");
+module.exports = function (token) {
+    this.token = token;
+    this.guild = (gid) => {
+        return new Promise((resolve, reject) => {
+		  request(`https://api.server-discord.com/guild/${gid}?dKey=${token}`, { json: true }, function (err, res, body) {
+			if(err) reject(err);
+			resolve(body);
+		  });
+		});
+  	}
+	this.guildplace = (gid) => {
+        return new Promise((resolve, reject) => {
+		  request(`https://api.server-discord.com/guild/${gid}/place?dKey=${token}`, { json: true }, function (err, res, body) {
+			if(err) reject(err);
+			resolve(body);
+		  });
+		});
+  	}
+	this.guildrated = (gid) => {
+        return new Promise((resolve, reject) => {
+		  request(`https://api.server-discord.com/guild/${gid}/rated?dKey=${token}`, { json: true }, function (err, res, body) {
+			if(err) reject(err);
+			resolve(body);
+		  });
+		});
+  	}
+	this.userrated = (uid) => {
+        return new Promise((resolve, reject) => {
+		  request(`https://api.server-discord.com/user/${uid}/rated?dKey=${token}`, { json: true }, function (err, res, body) {
+			if(err) reject(err);
+			resolve(body);
+		  });
+		});
+ 	}
+	this.nikawarns = (uid) => {
+        return new Promise((resolve, reject) => {
+		  request(`https://api.server-discord.com/warns/${uid}?dKey=${token}`, { json: true }, function (err, res, body) {
+			if(err) reject(err);
+			resolve(body);
+		  });
+		});
+  	}
+};
