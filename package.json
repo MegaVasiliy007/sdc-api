@@ -1,0 +1,20 @@
+{
+  "name": "sdc-wrapper",
+  "version": "1.0.2",
+  "description": "Небольшой модуль-враппер который позволяет вам легко взаимодействовать с Server-Discord API.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladciphersky/sdc-api.git"
+  },
+  "keywords": [
+    "server-discord",
+    "sdc",
+    "wrapper",
+    "sdc-wrapper"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
