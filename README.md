@@ -1,14 +1,14 @@
-# sdc-wrapper
+# sdc-api
 Небольшой модуль-враппер который позволяет вам легко взаимодействовать с [Server-Discord API](https://docs.server-discord.com).
 
 ### Установка
 ```sh
-$ npm i sdc-wrapper
+$ npm i sdc-api
 ```
 
 ### Пример кода
 ```js
-const SDC = require("sdc-wrapper");
+const SDC = require("sdc-api");
 const client = new SDC("<API-ключ>");
 
 // Проверка на варны
@@ -29,4 +29,4 @@ client.guildplace("490865478756204551").then(a => {
     } */
 });
 ```
-Все методы модуля: **[клик](https://github.com/vladciphersky/sdc-api/blob/master/METHODS.md)**.
+Все методы модуля: **[клик](https://github.com/MegaVasiliy007/sdc-api/blob/master/METHODS.md)**.
