@@ -1,6 +1,6 @@
 function message(type, argone, argtwo, argthree) {
-	console.log("============================================");
-	console.log(" ");
+  console.log("============================================");
+  console.log(" ");
   if (type == "error") {    
     console.log(`Ошибка: ${argone}`);
     console.log(`Код ошибки: ${argtwo}`);
@@ -11,7 +11,7 @@ function message(type, argone, argtwo, argthree) {
     console.log(`Тип спамера: ${argtwo}`);
     console.log(`Предупреждений: ${argthree}`);
   }
-	console.log(" ");
+  console.log(" ");
   console.log("============================================");
 }
 
