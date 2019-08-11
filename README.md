@@ -12,7 +12,7 @@ const SDC = require("sdc-api");
 const client = new SDC("<API-ключ>");
 
 // Проверка на варны
-client.nikawarns("178404926869733376").then(a => {
+client.warns("178404926869733376").then(a => {
   console.info(a);
     /* {
         "id": "178404926869733376",
