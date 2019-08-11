@@ -1,12 +1,12 @@
 function message(type, argone, argtwo, argthree) {
 	console.log("============================================");
 	console.log(" ");
-  if(type === "error") {    
+  if (type == "error") {    
     console.log(`Ошибка: ${argone}`);
     console.log(`Код ошибки: ${argtwo}`);
     console.log(`Дополнительно: ${argthree}`);
   }
-  if(type === "info") {
+  if (type == "info") {
     console.log(`ID: ${argone}`);
     console.log(`Тип спамера: ${argtwo}`);
     console.log(`Предупреждений: ${argthree}`);
