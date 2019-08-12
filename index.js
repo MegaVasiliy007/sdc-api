@@ -8,12 +8,12 @@ module.exports = function (token) {
 		if (!uri) return console.error("[sdc-api] Ошибка в работе модуля | Не указан адрес метода.");
 		
 		return {
-			method: method
-    	uri: hostname + uri,
-    	qs: {dKey: token},
-    	headers: {'User-Agent': `sdc-api/1.0.2 (${uri} | ${token})`},
-    	json: true
-  	};
+			method: method,
+    			uri: hostname + uri,
+    			qs: {dKey: token},
+    			headers: {'User-Agent': `sdc-api/1.0.2 (${uri} | ${token})`},
+    			json: true
+  		};
 	};
 
 	this.guild = (guildID) => request(this.options(guildID ? `/guild/${guildID}` : `/guild`))
@@ -37,5 +37,5 @@ module.exports = function (token) {
     
 		return request(this.options(`/warns/${userID}`))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
-  };
+	};
 };
