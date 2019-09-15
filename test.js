@@ -15,7 +15,7 @@ function message(type, argone, argtwo, argthree) {
   console.log("============================================");
 }
 
-const sdcAPI = require("./index");
+const sdcAPI = require("./sdc");
 const client = new sdcAPI("KEY");
 
 client.warns("178404926869733376").then((res) => {
