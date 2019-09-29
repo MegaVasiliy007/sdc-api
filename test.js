@@ -16,7 +16,7 @@ function message(type, argone, argtwo, argthree) {
 }
 
 const sdcAPI = require("./sdc");
-const client = new sdcAPI("KEY");
+const client = new sdcAPI.Blacklist("KEY");
 
 client.warns("178404926869733376").then((res) => {
   if (res.error) return message("error", res.error.type, res.error.code, res.error.message);
