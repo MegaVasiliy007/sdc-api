@@ -3,8 +3,8 @@ const hostname = "https://api.server-discord.com";
 
 class Monitoring {
   constructor (token) {
-    this.token = token;
-    if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ.");
+	this.token = token;
+	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ.");
   }
   
   options (uri, method = "GET") {
@@ -44,8 +44,8 @@ class Monitoring {
 
 class Blacklist {
   constructor (token) {
-    this.token = token;
-    if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ.");
+  	this.token = token;
+  	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ.");
   }
   
   options (uri, method = "GET") {
