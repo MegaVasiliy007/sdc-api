@@ -68,5 +68,4 @@ class Blacklist {
   };
 };
 
-module.exports.Monitoring = Monitoring;
-module.exports.Blacklist = Blacklist;
+module.exports = { Monitoring: Monitoring, Blacklist: Blacklist };
