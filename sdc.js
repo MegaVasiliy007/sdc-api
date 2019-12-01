@@ -1,5 +1,5 @@
 var request = require('request-promise-native');
-const hostname = "https://api.server-discord.com";
+const hostname = "https://api.server-discord.com/v1";
 
 module.exports = function (token) {
 	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ!");
