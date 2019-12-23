@@ -60,7 +60,7 @@ module.exports = function (token) {
 	this.botStats = (botID, shards = 0, servers = 0) => {
 		if(!botID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID бота!");
     
-		return request(this.options(`/bots/${userID}/stats`, 'POST', { shards, servers }))
+		return request(this.options(`/bots/${botID}/stats`, 'POST', { shards, servers }))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 };
