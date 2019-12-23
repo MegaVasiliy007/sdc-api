@@ -12,7 +12,7 @@ module.exports = function (token) {
     			uri: hostname + uri,
     			headers: {
 				'User-Agent': `sdc-api/1.0.3 (${uri} | ${token})`,
-				'Authorization': token
+				'Authorization': 'SDC '+token
 			},
     			json: true
   		};
