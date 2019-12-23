@@ -6,7 +6,3 @@ node_modules/
 
 # Output of 'npm pack'
 *.tgz
-
-sftp-config.json
-.floo
-.flooignore
