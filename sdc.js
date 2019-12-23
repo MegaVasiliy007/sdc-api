@@ -22,14 +22,26 @@ module.exports = function (token) {
 		return optionsObj;
 	};
 
-	this.guild = (guildID) => request(this.options(guildID ? `/guild/${guildID}` : `/guild`))
-		.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
-
-	this.guildplace = (guildID) => request(this.options(guildID ? `/guild/${guildID}/place` : `/guild/place`))
-		.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
-
-	this.guildrated = (guildID) => request(this.options(guildID ? `/guild/${guildID}/rated` : `/guild/rated`))
-		.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
+	this.guild = (guildID) => {
+		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
+		
+		return request(this.options(`/guild/${guildID}`))
+			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e))
+	};
+	
+	this.guildplace = (guildID) => {
+		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
+		
+		return request(this.options(`/guild/${guildID}/place`))
+			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e))
+	};
+	
+	this.guildrated = (guildID) => {
+		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
+		
+		return request(this.options(`/guild/${guildID}/rated`))
+			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e))
+	};
 
 	this.userrated = (userID) => {
 		if(!userID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID пользователя!");
