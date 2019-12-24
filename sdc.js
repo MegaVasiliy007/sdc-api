@@ -56,10 +56,10 @@ module.exports = function (token) {
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 	
-	this.botStats = (botID, args) => {
+	this.botStats = (botID, args = { servers: 0, shards: 0 }) => {
 		if(!botID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID бота!");
 		
-		return request(this.options(`/bots/${botID}/stats`, 'POST', ((!args) ? { servers: 0, shards: 0 } : { servers: args.servers, shards: args.shards })))
+		return request(this.options(`/bots/${botID}/stats`, 'POST', args))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 };
