@@ -11,7 +11,7 @@ module.exports = function (token) {
 			method: method,
     			uri: encodeURI(hostname + uri),
     			headers: {
-				'User-Agent': `sdc-api/1.0.3 (${uri})`,
+				'User-Agent': `sdc-api/1.0.5 (${uri})`,
 				'Authorization': 'SDC '+token
 			},
     			json: true
