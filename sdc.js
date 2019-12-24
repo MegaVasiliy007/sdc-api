@@ -4,21 +4,20 @@ const hostname = "https://api.server-discord.com/v2";
 module.exports = function (token) {
 	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ!");
 	
-	this.options = (uri, method = "GET", other = null) => {
+	this.options = (uri, method = "GET", args = null) => {
 		if (!uri) return console.error("[sdc-api] Ошибка в работе модуля | Не указан адрес метода.");
 		
 		const optionsObj = {
 			method: method,
-    			uri: hostname + uri,
+    			uri: encodeURI(hostname + uri),
     			headers: {
-				'User-Agent': `sdc-api/1.0.3 (${uri} | ${token})`,
+				'User-Agent': `sdc-api/1.0.3 (${uri})`,
 				'Authorization': 'SDC '+token
 			},
     			json: true
   		};
 		
-		if(other !== null) optionsObj.qs = other;
-		
+		if(args !== null) optionsObj.form = args;
 		return optionsObj;
 	};
 
@@ -57,10 +56,10 @@ module.exports = function (token) {
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 	
-	this.botStats = (botID, shards = 0, servers = 0) => {
+	this.botStats = (botID, args = { servers: 0, shards: 0 }) => {
 		if(!botID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID бота!");
-    
-		return request(this.options(`/bots/${botID}/stats`, 'POST', { shards, servers }))
+		
+		return request(this.options(`/bots/${botID}/stats`, 'POST', args))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 };

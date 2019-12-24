@@ -1,6 +1,6 @@
 {
   "name": "@megavasiliy007/sdc-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Простая и удобная библиотека для работы с API сайта server-discord.com",
   "keywords": ["sdc", "discord", "api", "server-discord", "sdc-api"],
   "license": "MIT",
