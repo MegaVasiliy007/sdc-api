@@ -71,11 +71,11 @@ module.exports = function (token) {
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
-	this.setAutopost = (client, interval = 900000) => {
+	this.setAutopost = (client, interval = 1800000) => {
 		if(!client) return console.error("[sdc-api] Ошибка аргументов | Не указан клиент бота!");
 		if(!isSupported(client)) return console.error('[sdc-api] Ошибка аргументов | Библиотека бота не поддерживается! Пожалуйста, сообщите нам на GitHub:\n' + encodeURI(`${paths.github}/issues`));
 		
-		if(interval && interval <= 15000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 секунд!");
+		if(interval && interval <= 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 секунд!");
 		request(this.options(`/bots/${client.user.id}/stats`, 'POST', { servers: client.guilds.size, shards: ((client.shards == undefined) ? 0 : client.shards.size) }))
 			.then((r) => {
 				if(r.error) return console.error("[sdc-api | Авто-пост] Ошибка в работе\n" + r.error.message);
