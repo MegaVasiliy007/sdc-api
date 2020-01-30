@@ -7,21 +7,19 @@ const paths = {
 	github: "https://github.com/MegaVasiliy007/sdc-api"
 };
 
-const isLib = (library, client) => {// НЕ РАБОТАЕТ | ТРЕБУЕТСЯ ВМЕШАТЕЛЬСТВО MegaVasiliy007
+const isLib = (library, client) => {
 	try {
 		const lib = require.cache[require.resolve(library)];
 		return lib && client instanceof lib.exports.Client;
-	} catch (e) {
-		return false;
-	}
-}; // НЕ РАБОТАЕТ | ТРЕБУЕТСЯ ВМЕШАТЕЛЬСТВО MegaVasiliy007
+	} catch (e) {return false;}
+};
 
 const isSupported = client => isLib('discord.js', client) || isLib('eris', client);
 
 const sendStat = (client, opt) => {
 	let shards = 0;
-	if (client.shard && client.shard.count !== 1) shards += client.shard.count;
-	else if (client.shards && client.shards.size !== 1) shards += client.shards.size;
+	if (client.shard && client.shard.count !== 1) shards = client.shard.count;
+	else if (client.shards && client.shards.size !== 1) shards = client.shards.size;
 	
 	opt.form = { servers: client.guilds.size, shards };
 	return request(opt)
@@ -93,6 +91,6 @@ module.exports = function (token) {
 		if(interval && interval < 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 минут!");
 		
 		sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST'));
-		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST', { servers: client.guilds.size, shards })), interval);
+		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST')), interval);
 	};
 };
