@@ -87,7 +87,7 @@ module.exports = function (token) {
 		if(!client) return console.error("[sdc-api] Ошибка аргументов | Не указан клиент бота!");
 		if(!isSupported(client)) return console.error('[sdc-api] Ошибка аргументов | Библиотека бота не поддерживается! Пожалуйста, сообщите нам на GitHub:\n' + encodeURI(`${paths.github}/issues`));
 		
-		if(interval && interval <= 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 секунд!");
+		if(interval && interval <= 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 минут!");
 		
 		sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST', { servers: client.guilds.size, shards }));
 		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST', { servers: client.guilds.size, shards })), interval);
