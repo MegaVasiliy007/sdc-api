@@ -87,17 +87,18 @@ client.warns("178404926869733376")
     });
 
 /* Категория "Боты":
-    - botStats | Отправить данные о количестве серверов и шардов на мониторинг ботов
-      [!] Для отправки запроса, укажите ID бота и объект с данными
+    - setAutopost | Автоматическая отправка статистики бота
+      [!] Для отправки запроса, укажите клиент бота и интервал обновления в миллисекундах (по умолчанию стоит 30 минут)
+      
+    Пример использования метода находится ниже.
 */
 
-var options = {
-    servers: bot.guilds.size,
-    shards: bot.shards.size
-};
+const { Client } = require('discord.js');
+const bot = new Client();
 
-client.botStats("464272403766444044", options)
-    .then((data) => {
-        console.log(data.status); // Вернёт "true", если всё успешно
-    });
+bot.once('ready', () => {
+    client.setAutopost(bot, 900000);
+});
+
+bot.login('токен-бота');
 ```
