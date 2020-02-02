@@ -97,7 +97,7 @@ const { Client } = require('discord.js');
 const bot = new Client();
 
 bot.once('ready', () => {
-    client.setAutopost(bot, 900000);
+    client.setAutopost(bot);
 });
 
 bot.login('токен-бота');
