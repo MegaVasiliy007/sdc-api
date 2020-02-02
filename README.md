@@ -53,10 +53,13 @@ client.guildrated("640586112624230450")
     });
 
 // Отправить статистику мониторингу для ботов
-client.botStats("464272403766444044", { servers: bot.guilds.size, shards: bot.shards.size })
+client.sendStat(bot, { servers: bot.guilds.size, shards: bot.shards.size })
     .then((data) => {
         console.log(data.status); // Вернёт "true", если всё успешно
     });
+    
+// Отправлять статистику на мониторинг каждые 30 минут (30 * 60 * 1000 = 1800000 миллисекунд)
+client.setAutopost(bot, 30 * 60 * 1000)
 ```
 
 Все методы враппера: **[клик](https://github.com/MegaVasiliy007/sdc-api/blob/master/METHODS.md)**.
