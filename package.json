@@ -1,6 +1,6 @@
 {
     "name": "sdc-api",
-    "version": "2.0.0",
+    "version": "1.0.8",
     "description": "Простая и удобная библиотека для работы с API сайта server-discord.com",
     
     "main": "sdc.js",
