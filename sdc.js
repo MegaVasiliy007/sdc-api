@@ -1,8 +1,22 @@
+/* jshint esversion: 6 */
+
 var { version } = require('./package');
-var request = require('request-promise-native');
+function request(params) {
+	var { request } = require('https');
+	return new Promise((resolve, reject) => {
+		var req = request(params, (res) => {
+			res.on('data', (data) => resolve(
+				JSON.parse(data)
+			));
+		});
+
+		req.end();
+		req.on('error', reject);
+	});
+}
 
 const paths = {
-	hostname: "https://api.server-discord.com/v2",
+	hostname: "api.server-discord.com",
 	botsPath: "https://bots.server-discord.com",
 	github: "https://github.com/MegaVasiliy007/sdc-api"
 };
@@ -16,36 +30,22 @@ const isLib = (library, client) => {
 
 const isSupported = client => isLib('discord.js', client) || isLib('eris', client);
 
-const sendStat = (client, opt) => {
-	let shards = 0;
-	if (client.shard && client.shard.count !== 1) shards = client.shard.count;
-	else if (client.shards && client.shards.size !== 1) shards = client.shards.size;
-	
-	opt.form = { servers: client.guilds.size, shards };
-	return request(opt)
-		.then((r) => {
-			if(r.error) return console.error("[sdc-api | Авто-пост] Ошибка в работе\n" + r.error.message);
-			else return console.info("[sdc-api | Авто-пост] Статистика для " + client.user.tag + " опубликована на мониторинг.\n" + encodeURI(paths.botsPath + "/" + client.user.id));
-		}, (e) => console.error("[sdc-api | Авто-пост] Ошибка в работе | ", e));
-};
-
 module.exports = function (token) {
 	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ!");
 	
-	this.options = (uri, method = "GET", args = null) => {
+	this.options = (uri, method = "GET") => {
 		if (!uri) return console.error("[sdc-api] Ошибка в работе модуля | Не указан адрес метода.");
 		
 		const optionsObj = {
 			method: method,
-			uri: encodeURI(paths.hostname + uri),
+			hostname: paths.hostname,
+			path: "/v2" + uri,
 			headers: {
 				'User-Agent': `sdc-api/${version} (${uri})`,
 				'Authorization': 'SDC ' + token
-			},
-			json: true
+			}
 		};
-		
-		if(args !== null) optionsObj.form = args;
+
 		return optionsObj;
 	};
 
@@ -84,13 +84,28 @@ module.exports = function (token) {
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
-	this.setAutopost = (client, interval = 1800000) => {
+	/* this.setAutopost = (client, interval = 1800000) => {
 		if(!client) return console.error("[sdc-api] Ошибка аргументов | Не указан клиент бота!");
 		if(!isSupported(client)) return console.error('[sdc-api] Ошибка аргументов | Библиотека бота не поддерживается! Пожалуйста, сообщите нам на GitHub:\n' + encodeURI(`${paths.github}/issues`));
 		
 		if(interval && interval < 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 минут!");
 		
+		function sendStat(client, opt) {
+			let shards = 0;
+			if (client.shard && client.shard.count !== 1) shards = client.shard.count;
+			else if (client.shards && client.shards.size !== 1) shards = client.shards.size;
+
+			opt.body = { servers: client.guilds.size, shards: shards };
+			return request(opt)
+				.then((r) => {
+					if(r.error) return console.error("[sdc-api | Авто-пост] Ошибка в работе\n" + r.error.message);
+					else return console.info("[sdc-api | Авто-пост] Статистика для " + client.user.tag + " опубликована на мониторинг.\n" + encodeURI(paths.botsPath + "/" + client.user.id));
+				}, (e) => console.error("[sdc-api | Авто-пост] Ошибка в работе | ", e));
+		}
+
 		sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST'));
 		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST')), interval);
 	};
+	
+	IN DEVELOPING */
 };

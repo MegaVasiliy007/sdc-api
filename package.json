@@ -1,6 +1,6 @@
 {
-  "name": "@megavasiliy007/sdc-api",
-  "version": "1.0.7",
+  "name": "sdc-api",
+  "version": "2.0.0",
   "description": "Простая и удобная библиотека для работы с API сайта server-discord.com",
   "keywords": [
     "sdc",
@@ -10,14 +10,13 @@
     "sdc-api"
   ],
   "license": "MIT",
-  "author": "SDC (https://server-discord.com/)",
+  "author": {
+    "name": "SD.C Community",
+    "url": "https://server-discord.com/"
+  },
   "main": "sdc.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/MegaVasiliy007/sdc-api.git"
-  },
-  "dependencies": {
-    "request": "latest",
-    "request-promise-native": "latest"
   }
 }

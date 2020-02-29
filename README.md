@@ -5,14 +5,14 @@
 ```sh
 $ npm install github:MegaVasiliy007/sdc-api
 ```
-После установки, враппер будет определяться как `@megavasiliy007/sdc-api`
+После установки, враппер будет определяться как `sdc-api`
 
 ## Инициализация враппера
 ```js
 var apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2MzIwMzA3Mjk5MDY0MjE4NiIsInBlcm1zIjowLCJpYXQiOjE1NzcxMjE4NDZ9.Y5qSkDQhOLsLbE6tcyp9e4ua0FtCrN1ykBBe0rJ9TXo";
 // API ключ можно получить на странице редактирования вашего бота
 
-const SDC = require("@megavasiliy007/sdc-api");
+const SDC = require("sdc-api");
 const client = new SDC(apiKey);
 ```
 
@@ -53,7 +53,7 @@ client.guildrated("640586112624230450")
     });
 
 // Отправлять статистику на мониторинг каждые 30 минут
-client.setAutopost(bot)
+client.setAutopost(bot);
 ```
 
 Все методы враппера: **[клик](https://github.com/MegaVasiliy007/sdc-api/blob/master/METHODS.md)**.
