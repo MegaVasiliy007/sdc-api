@@ -2,17 +2,36 @@
 
 var { version } = require('./package');
 function request(params) {
+	var { stringify } = require('querystring');
 	var { request } = require('https');
-	return new Promise((resolve, reject) => {
-		var req = request(params, (res) => {
-			res.on('data', (data) => resolve(
-				JSON.parse(data)
-			));
+	
+	function SendRequest(postData) {
+		return new Promise((resolve, reject) => {
+			var req = request(params, (res) => {
+				res.setEncoding('utf8');
+				res.on('data', (data) => resolve(
+					JSON.parse(data)
+				));
+			});
+		
+			req.on('error', reject);
+		
+			if(postData) req.write(postData);
+			req.end();
 		});
+	}
 
-		req.end();
-		req.on('error', reject);
-	});
+	if(params.body) {
+		const form = params.body;
+		delete params.body;
+
+		const postData = stringify(form);
+
+		params.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+		params.headers['Content-Length'] = Buffer.byteLength(postData);
+
+		return SendRequest(postData);
+	} else return SendRequest();
 }
 
 const paths = {
@@ -84,7 +103,7 @@ module.exports = function (token) {
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
-	/* this.setAutopost = (client, interval = 1800000) => {
+	this.setAutopost = (client, interval = 1800000) => {
 		if(!client) return console.error("[sdc-api] Ошибка аргументов | Не указан клиент бота!");
 		if(!isSupported(client)) return console.error('[sdc-api] Ошибка аргументов | Библиотека бота не поддерживается! Пожалуйста, сообщите нам на GitHub:\n' + encodeURI(`${paths.github}/issues`));
 		
@@ -106,6 +125,4 @@ module.exports = function (token) {
 		sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST'));
 		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST')), interval);
 	};
-	
-	IN DEVELOPING */
 };
