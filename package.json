@@ -16,7 +16,8 @@
         "discord",
         "api",
         "server-discord",
-        "sdc-api"
+        "sdc-api",
+        "@megavasiliy007/sdc-api"
     ],
 
     "repository": {

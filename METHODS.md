@@ -6,7 +6,7 @@
 var apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2MzIwMzA3Mjk5MDY0MjE4NiIsInBlcm1zIjowLCJpYXQiOjE1NzcxMjE4NDZ9.Y5qSkDQhOLsLbE6tcyp9e4ua0FtCrN1ykBBe0rJ9TXo";
 // API ключ можно получить на странице редактирования вашего бота
 
-const SDC = require("sdc-api");
+const SDC = require("@megavasiliy007/sdc-api");
 const client = new SDC(apiKey);
 
 /* Категория "Сервер":
