@@ -1,13 +1,13 @@
 /* jshint esversion: 6 */
 
-var { version } = require('./package');
+const { version } = require('./package');
 function request(params) {
-	var { stringify } = require('querystring');
-	var { request } = require('https');
+	let { stringify } = require('querystring');
+	let { request } = require('https');
 	
 	function SendRequest(postData) {
 		return new Promise((resolve, reject) => {
-			var req = request(params, (res) => {
+			let req = request(params, (res) => {
 				res.setEncoding('utf8');
 				res.on('data', (data) => resolve(
 					JSON.parse(data)
@@ -22,10 +22,10 @@ function request(params) {
 	}
 
 	if(params.body) {
-		const form = params.body;
+		let form = params.body;
 		delete params.body;
 
-		const postData = stringify(form);
+		let postData = stringify(form);
 
 		params.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 		params.headers['Content-Length'] = Buffer.byteLength(postData);
