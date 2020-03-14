@@ -1,37 +1,31 @@
 /* jshint esversion: 6 */
 
-const { version } = require('./package');
-function request(params) {
-	let { stringify } = require('querystring');
-	let { request } = require('https');
-	
-	function SendRequest(postData) {
-		return new Promise((resolve, reject) => {
-			let req = request(params, (res) => {
-				res.setEncoding('utf8');
-				res.on('data', (data) => resolve(
-					JSON.parse(data)
-				));
-			});
-		
-			req.on('error', reject);
-		
-			if(postData) req.write(postData);
-			req.end();
+const { version } = require('./package'),
+      { stringify } = require('querystring'),
+      { request } = require('https');
+
+function SendRequest(params, postData) {
+	return new Promise((resolve, reject) => {
+		let req = request(params, (res) => {
+			res.setEncoding('utf8');
+			res.on('data', (data) => resolve( JSON.parse(data) ));
 		});
-	}
+		
+		req.on('error', reject);
+		
+		if(postData) req.write(postData);
+		req.end();
+	});
+}
 
+function request(params) {
 	if(params.body) {
-		let form = params.body;
-		delete params.body;
-
-		let postData = stringify(form);
-
+		let postData = stringify( String(params.body) );
 		params.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 		params.headers['Content-Length'] = Buffer.byteLength(postData);
 
-		return SendRequest(postData);
-	} else return SendRequest();
+		return SendRequest(params, postData);
+	} else return SendRequest(params);
 }
 
 const paths = {
