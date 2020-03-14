@@ -1,28 +1,34 @@
 /* jshint esversion: 6 */
 
-const
-	{ version } = require('./package'),
-	{ request, sendStat } = require('./request'),
-	paths = {
-		hostname: "api.server-discord.com",
-		botsPath: "https://bots.server-discord.com",
-		github: "https://github.com/MegaVasiliy007/sdc-api"
-	},
-	isLib = (library, client) => {
-		try {
-			const lib = require.cache[require.resolve(library)];
-			return lib && client instanceof lib.exports.Client;
-		} catch (e) {return false;}
-	},
-	isSupported = client => isLib('discord.js', client) || isLib('eris', client);
-	
+const { version } = require('./package')
+		, { request, sendStat } = require('./request')
+		, isLib = (library, client) => {try {const lib = require.cache[require.resolve(library)];return lib && client instanceof lib.exports.Client;} catch (e) {return false;}}
+		, isSupported = client => isLib('discord.js', client) || isLib('eris', client)
+		, paths = {
+				hostname: "api.server-discord.com",
+				botsPath: "https://bots.server-discord.com",
+				github: "https://github.com/MegaVasiliy007/sdc-api"
+			}
+;
+
+/**
+ * @author SDC
+ * @module
+ * @param {string} token
+ */
 module.exports = function (token) {
 	if(!token) return console.error("[sdc-api] Ошибка аргументов | Не указан API ключ!");
-	
-	this.options = (uri, method = "GET") => {
+
+	/**
+	 * @function
+	 * @param {string} uri
+	 * @param {string} method
+	 * @returns {{path: string, headers: {Authorization: string, 'User-Agent': string}, hostname: string, method: string}|void}
+	 */
+	let options = (uri, method = "GET") => {
 		if (!uri) return console.error("[sdc-api] Ошибка в работе модуля | Не указан адрес метода.");
-		
-		const optionsObj = {
+
+		return {
 			method: method,
 			hostname: paths.hostname,
 			path: "/v2" + uri,
@@ -31,52 +37,81 @@ module.exports = function (token) {
 				'Authorization': 'SDC ' + token
 			}
 		};
-
-		return optionsObj;
 	};
 
+	/**
+	 * @function
+	 * @param {string} guildID
+	 * @returns {PromiseLike<Object>|Promise<Object>|void}
+	 */
 	this.guild = (guildID) => {
 		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
-		
-		return request(this.options(`/guild/${guildID}`))
-			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
-	};
-	
-	this.guildplace = (guildID) => {
-		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
-		
-		return request(this.options(`/guild/${guildID}/place`))
-			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
-	};
-	
-	this.guildrated = (guildID) => {
-		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
-		
-		return request(this.options(`/guild/${guildID}/rated`))
+
+		return request(options(`/guild/${guildID}`))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
-	this.userrated = (userID) => {
+	/**
+	 * @function
+	 * @param {string} guildID
+	 * @returns {PromiseLike<Object>|Promise<Object>|void}
+	 */
+	this.guildPlace = (guildID) => {
+		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
+
+		return request(options(`/guild/${guildID}/place`))
+			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
+	};
+
+	/**
+	 * @function
+	 * @param {string} guildID
+	 * @returns {PromiseLike<Object>|Promise<Object>|void}
+	 */
+	this.guildRated = (guildID) => {
+		if(!guildID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID сервера!");
+
+		return request(options(`/guild/${guildID}/rated`))
+			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
+	};
+
+	/**
+	 * @function
+	 * @param {string} userID
+	 * @returns {PromiseLike<Object>|Promise<Object>|void}
+	 */
+	this.userRated = (userID) => {
 		if(!userID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID пользователя!");
-		
-		return request(this.options(`/user/${userID}/rated`))
+
+		return request(options(`/user/${userID}/rated`))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
+	/**
+	 * @function
+	 * @param {string} userID
+	 * @returns {PromiseLike<Object>|Promise<Object>|void}
+	 */
 	this.warns = (userID) => {
 		if(!userID) return console.error("[sdc-api] Ошибка аргументов | Не указан ID пользователя!");
-    
-		return request(this.options(`/warns/${userID}`))
+
+		return request(options(`/warns/${userID}`))
 			.then((r) => r, (e) => console.error("[sdc-api] Ошибка в работе | ", e));
 	};
 
-	this.setAutopost = (client, interval = 1800000) => {
+	/**
+	 * @function
+	 * @param client
+	 * @param {number} interval
+	 * @returns {number|void}
+	 */
+	this.setAutoPost = (client, interval = 1800000) => {
 		if(!client) return console.error("[sdc-api] Ошибка аргументов | Не указан клиент бота!");
 		if(!isSupported(client)) return console.error('[sdc-api] Ошибка аргументов | Библиотека бота не поддерживается! Пожалуйста, сообщите нам на GitHub:\n' + encodeURI(`${paths.github}/issues`));
-		
+
 		if(interval && interval < 900000) return console.error("[sdc-api] Ошибка аргументов | Отправка статистики возможна не менее одного раза в 15 минут!");
 
-		sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST'));
-		return setInterval(() => sendStat(client, this.options(`/bots/${client.user.id}/stats`, 'POST')), interval);
+		sendStat(client, options(`/bots/${client.user.id}/stats`, 'POST'));
+		return setInterval(() => sendStat(client, options(`/bots/${client.user.id}/stats`, 'POST')), interval);
 	};
 };
