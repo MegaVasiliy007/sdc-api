@@ -33,7 +33,7 @@ module.exports = {
 	 */
 	request: (params) => {
 		if(params.body) {
-			let postData = stringify( String(params.body) );
+			let postData = stringify( params.body );
 			params.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 			params.headers['Content-Length'] = Buffer.byteLength(postData);
 
