@@ -47,11 +47,15 @@ module.exports = {
 	 * @param {Object} opt
 	 */
 	sendStat: (client, opt) => {
-		let shards = 0;
-		if (client.shard && client.shard.count !== 1) shards = client.shard.count;
-		else if (client.shards && client.shards.size !== 1) shards = client.shards.size;
+		let data = { servers: 0, shards: 0 };
 
-		opt.body = { servers: client.guilds.size, shards: shards };
+		if (client.shard && client.shard.count !== 1) data.shards = client.shard.count;
+		else if (client.shards && client.shards.size !== 1) data.shards = client.shards.size;
+
+		if (client.guilds.cache) data.servers = client.guilds.cache.size;
+		else data.servers = client.guilds.size;
+
+		opt.body = data;
 		module.exports.request(opt)
 			.then((r) => {
 				if(r.error) return console.error("[sdc-api | Авто-пост] Ошибка в работе\n" + r.error.message);
