@@ -3,7 +3,7 @@
 const { version } = require('./package')
 		, { request, sendStat } = require('./request')
 		, isLib = (library, client) => {try {const lib = require.cache[require.resolve(library)];return lib && client instanceof lib.exports.Client;} catch (e) {return false;}}
-		, isSupported = client => isLib('discord.js', client) || isLib('eris', client)
+		, isSupported = client => isLib('discord.js', client) || isLib('eris', client) || isLib('discore.js', client)
 		, paths = {
 				hostname: "api.server-discord.com",
 				botsPath: "https://bots.server-discord.com",
@@ -34,7 +34,7 @@ module.exports = function (token) {
 			path: "/v2" + uri,
 			headers: {
 				'User-Agent': `sdc-api/${version} (${uri})`,
-				'Authorization': 'SDC ' + token
+				'Authorization': `SDC ${token}`
 			}
 		};
 	};
